@@ -1,9 +1,12 @@
 <?php
-
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\CategoryController;
+
 
 route::get('/',[HomeController::class,'home']);
 
@@ -19,9 +22,15 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('dashboard',[HomeController::class,'index'])->middleware(['auth','admin']);
-Route::get('admin-page',function(){
-    return view('admin.index');
+route::get('admin/dashboard',[HomeController::class,'index'])->middleware(['auth','admin']);
+
+route::get('view_category',[AdminController::class,'view_category'])->middleware(['auth','admin']);
+route::post('add_category',[AdminController::class,'add_category'])->middleware(['auth','admin']);
+
+route::prefix('backend')->name('backend.')->group(function(){
+    route::resource('category',CategoryController::class);
 });
 
-Route::get('logout',[App\Http\Controllers\Auth\RegisteredUserController::class,'logout'])->name('logout');
+Route::prefix('backend')->group(function () {
+    Route::resource('product', ProductController::class);
+});
