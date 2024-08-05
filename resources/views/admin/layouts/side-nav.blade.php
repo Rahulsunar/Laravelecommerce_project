@@ -56,11 +56,6 @@
                                         <p>Product List</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="pages/tables/data.html" class="nav-link">
-                                        <i class="fas fa-angle-right nav-icon"></i>
-                                        <p>Brands</p>
-                                    </a>
                                 </li>
                             </ul>
                         </li>

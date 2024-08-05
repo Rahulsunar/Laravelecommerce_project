@@ -52,8 +52,62 @@ class CategoryController extends Controller
     // Display the specified category
     public function show(string $id)
     {
-       
+       $data['record']= Category::find($id);
+    //    dd($record);
+       if($data['record']==null){
+        request()->session()->flash('error', 'Category Not Found!!');
+        return redirect()->route('backend.category.index');
+       }
+       return view('backend.category.show', compact('data'));
+    }
+    public function edit(string $id){
+        $data['record']= Category::find($id);
+    //    dd($record);
+       if($data['record']==null){
+        request()->session()->flash('error', 'Category Not Found!!');
+        return redirect()->route('backend.category.index');
+       }
+       return view('backend.category.edit', compact('data'));
     }
 
-    // Other methods...
+    public function update(CategoryRequest $request, string $id){
+        $data['record']= Category::find($id);
+    //    dd($record);
+       if($data['record']==null){
+        request()->session()->flash('error', 'Category Not Found!!');
+        
+       }
+       if ($request->hasFile('icon_file')) {
+        $iconfile = $request->file('icon_file');
+        $iconname = time() . '_' . $iconfile->getClientOriginalName();
+        $iconfile->move(public_path('assets/images/category'), $iconname); // Use public_path for better practice
+        $request->merge(['icon' => $iconname]);
+        unlink(public_path('assets/images/category/'.$data['record']->icon));
+    }
+       $request->request->add(['updated_by'=>auth()->user()->id]);
+       if ($data['record']->update($request->all())) {
+        $request->session()->flash('success', 'Category Updated Successfully');
+    } else {
+        $request->session()->flash('error', 'Category update Failed');
+    }
+
+    // Redirect to index route
+    return redirect()->route('backend.category.index');
+    }
+
+    public function destroy(string $id){
+        $data['record']= Category::find($id);
+        if($data['record']==null){
+        request()->session()->flash('error', 'Category Not Found!!');
+       }else{
+            if ($data['record']->delete()){
+                request()->session()->flash('success', 'Category Deleted');
+            }else{
+                request()->session()->flash('error', 'Category Delete Failed!!');
+            }
+       }
+       return redirect()->route('backend.category.index');
+    }
+
+    
 }

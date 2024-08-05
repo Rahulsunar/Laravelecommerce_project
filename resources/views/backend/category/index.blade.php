@@ -12,7 +12,11 @@
                 </div>
                 <div class="card-body">
                     <!-- Start of category list table -->
-                    <h4>List Category</h4>
+                    <h6>List Category
+                        <a class="btn btn-primary" href="{{route('backend.category.create')}}">Create</a>
+
+
+                    </h6>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -36,10 +40,14 @@
                                     </td>
 
                                     <td>
-                                        <!-- Buttons for Edit, Delete, and View without functionality -->
-                                        <button class="btn btn-warning btn-sm">Edit</button>
-                                        <button class="btn btn-danger btn-sm">Delete</button>
-                                        <button class="btn btn-info btn-sm">View</button>
+                                        <a class="btn btn-primary" href="{{route('backend.category.show',$record->id)}}">View</a>
+                                        <a class="btn btn-warning" href="{{route('backend.category.edit',$record->id)}}">Edit</a> 
+                                        <form action="{{route('backend.category.destroy',$record->id)}}" method="POST" style="display: inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form>
+                                        
                                     </td>
 
 
