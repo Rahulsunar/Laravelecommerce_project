@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('page-title', 'Category List')
+@section('page-title', 'Trash List')
 
 @section('content')
     <div class="row">
@@ -8,13 +8,13 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Category Management</h3>
+                    <h3 class="card-title">Trash Management</h3>
                 </div>
                 <div class="card-body">
                     <!-- Start of category list table -->
-                    <h6 class="m-0 font-weight-bold text-primary">List Category
+                    <h6 class="m-0 font-weight-bold text-primary">Trash List
                         <a class="btn btn-primary" href="{{route('backend.category.create')}}">Create</a>
-                        <a class="btn btn-danger" href="{{route('backend.category.trash')}}">Trash</a>
+                        <a class="btn btn-secondary" href="{{route('backend.category.index')}}">List</a>
 
 
                     </h6>
@@ -41,12 +41,12 @@
                                     </td>
 
                                     <td>
-                                        <a class="btn btn-primary" href="{{route('backend.category.show',$record->id)}}">View</a>
+                                        <a class="btn btn-warning" href="{{route('backend.category.restore',$record->id)}}">Restore</a>
                                         <a class="btn btn-warning" href="{{route('backend.category.edit',$record->id)}}">Edit</a> 
-                                        <form action="{{route('backend.category.destroy',$record->id)}}" method="POST" style="display: inline-block">
+                                        <form action="{{route('backend.category.force_delete',$record->id)}}" method="POST" style="display: inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Trash</button>
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                         </form>
                                         
                                     </td>

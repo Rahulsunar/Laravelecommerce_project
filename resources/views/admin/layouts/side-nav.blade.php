@@ -47,11 +47,36 @@
                                 <li class="nav-item">
                                     <a href="{{route('backend.category.create')}}" class="nav-link">
                                         <i class="fas fa-angle-right nav-icon"></i>
-                                        <p>Add Product</p>
+                                        <p>Create</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('backend.category.index')}}" class="nav-link">
+                                        <i class="fas fa-angle-right nav-icon"></i>
+                                        <p>List</p>
+                                    </a>
+                                </li>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-fw fa-shopping-bag"></i>
+                                <p>
+                                    Products
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('backend.products.create')}}" class="nav-link">
+                                        <i class="fas fa-angle-right nav-icon"></i>
+                                        <p>Add Product</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('backend.products.index')}}" class="nav-link">
                                         <i class="fas fa-angle-right nav-icon"></i>
                                         <p>Product List</p>
                                     </a>
@@ -59,6 +84,7 @@
                                 </li>
                             </ul>
                         </li>
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>

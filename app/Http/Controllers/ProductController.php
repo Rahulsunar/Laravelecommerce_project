@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\products;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     // Display the form for creating a new product
+
+    public function index()
+{
+    $products = products::all(); // Assuming you have a Product model
+    return view('backend.products.index', compact('products'));
+}
+
     public function create()
     {
-        return view('admin.product.create');
+        return view('backend.products.create');
     }
 
     // Store a newly created product in the database
@@ -26,7 +34,7 @@ class ProductController extends Controller
         // Logic to store the product in the database
         // ...
 
-        return redirect()->route('backend.product.index')->with('success', 'Product added successfully.');
+        return redirect()->route('backend.products.index')->with('success', 'Product added successfully.');
     }
 
     // Add other methods as necessary

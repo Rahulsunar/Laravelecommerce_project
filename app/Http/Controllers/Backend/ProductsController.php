@@ -4,35 +4,44 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Http\Requests\CategoryRequest;
-use Symfony\Component\Filesystem\Path;
+use App\Http\Requests\ProductsRequest;
+use App\Models\products;
+use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+
+class ProductsController extends Controller
 {
-    public $module ='Category';
-    public $base_folder='backend.category.';
-    public $base_route='backend.category.';
-    public $image_folder= 'assets/images/category';
+    public $module ='products';
+    public $base_folder='backend.products.';
+    public $base_route='backend.products.';
+    public $image_folder= 'assets/images/products';
     public $model;
 
     public function __construct(){
-        $this->model=new Category();
+        $this->model=new products();
     }
-    // Display the form for creating a new category
-    public function create()
-    {
-        return view($this->base_folder .'create');
-    }
+    // Display the form for creating a new product
+public function create()
+{
+    $data['categories'] = Category::all();
+    dd($data['categories']);
+    return view($this->base_folder .'create', compact('data'));
+}
+
+
+    
 
     // Display a listing of categories
     public function index()
-    {
-        $data['records'] = $this->model->all();
-        return view($this->base_folder.'index', compact('data'));
-    }
+{
+    $data['records'] = $this->model->all();
+    dd($data); // Debugging line to check data
+    return view($this->base_folder.'index', compact('data'));
+}
+
 
     // Store a newly created category in storage
-    public function store(CategoryRequest $request)
+    public function store(ProductsRequest $request)
     {
         // Add created_by field to the request
         $request->merge(['created_by' => auth()->user()->id]);
@@ -86,7 +95,7 @@ class CategoryController extends Controller
     }
 
     // Update the specified category in storage
-    public function update(CategoryRequest $request, string $id)
+    public function update(ProductsRequest $request, string $id)
     {
         $data['record'] = $this->model->find($id);
 
@@ -138,32 +147,5 @@ class CategoryController extends Controller
     {
         $data['records'] = Category::onlyTrashed()->get();
         return view('backend.category.trash', compact('data'));
-    }
-    public function restore($id)
-    {
-        $data['record'] = Category::where('id',$id)->onlyTrashed()->first();
-        if ($data['record']->restore()) {
-            request()->session()->flash('success', 'Category Restored');
-        }else{
-            request()->session()->flash('error','Category Restored Not Failed!!');
-        }
-        return redirect()->route('backend.category.trash');
-
-    }
-    public function forceRemove(string $id)
-    {
-        $data['record'] = Category::where('id',$id)->onlyTrashed()->first();
-
-        if ($data['record'] == null) {
-            request()->session()->flash('error', $this->module . 'Not Found!!');
-        } else {
-            if ($data['record']->forceDelete()) {
-                request()->session()->flash('success', $this->module . 'Deleted');
-            } else {
-                request()->session()->flash('error', $this->module . 'Delete Failed!!');
-            }
-        }
-
-        return redirect()->route($this->base_route . 'index');
     }
 }
