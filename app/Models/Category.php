@@ -21,6 +21,8 @@ class Category extends Model
         return $this->belongsTo(User::class, 'updated_by','id');
     }
 
-    
+    public function getAllActiveCategory(){
+        return $this->where('status',1)->orderBy('rank')->get();
+    }
     
 }

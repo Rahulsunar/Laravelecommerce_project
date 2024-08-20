@@ -1,42 +1,68 @@
 @extends('admin.layouts.app')
 
-@section('page-title', 'Products Details')
+@section('page-title', 'Trash List')
 
 @section('content')
-    <h1>Trashed Categories</h1>
-    @include('backend.includes.flash_message')
-    @if($data['records']->isEmpty())
-        <p>No trashed categories found.</p>
-    @else
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($data['records'] as $products)
-                    <tr>
-                        <td>{{ $products->id }}</td>
-                        <td>{{ $products->name }}</td>
-                        <td>
-                            <!-- Add buttons for restoring or permanently deleting the products -->
-                            <form action="{{ route('backend.products.restore', $products->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit">Restore</button>
-                            </form>
-                            <form action="{{ route('backend.products.forceDelete', $products->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Delete Permanently</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endif
+    <div class="row">
+        @include('backend.includes.flash_message')
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Product Management</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Start of category list table -->
+                    <h6 class="m-0 font-weight-bold text-primary">Trash List
+                        <a class="btn btn-primary" href="{{route('backend.products.create')}}">Create</a>
+                        <a class="btn btn-secondary" href="{{route('backend.products.index')}}">List</a>
+
+
+                    </h6>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Sn</th>
+                                <th>Title</th>
+                                <th>Rank</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($data['records'] as $record)
+                                <tr>
+                                    <td>{{ $loop->index + 1 }}</td>
+                                    <td>{{ $record->title }}</td>
+                                    <td>{{ $record->rank }}</td>
+                                    <td>
+                                        @include('backend.includes.display_status_message', [
+                                            'status' => $record->status,
+                                        ])
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-warning" href="{{route('backend.products.restore',$record->id)}}">Restore</a>
+                                        <a class="btn btn-warning" href="{{route('backend.products.edit',$record->id)}}">Edit</a> 
+                                        <form action="{{route('backend.products.force_delete',$record->id)}}" method="POST" style="display: inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form>
+                                        
+                                    </td>
+
+
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5"><span class="text-danger">No records.</span></td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    <!-- End of products list table -->
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

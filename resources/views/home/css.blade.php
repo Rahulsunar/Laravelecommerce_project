@@ -7,10 +7,10 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="{{asset('assets/images/setting/' . $data['setting']->favicon)}}" type="image/x-icon">
 
 <title>
-  Giftos
+  {{$data['setting']->website_name}}
 </title>
 
 <!-- slider stylesheet -->

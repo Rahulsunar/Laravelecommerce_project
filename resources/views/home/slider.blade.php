@@ -10,11 +10,13 @@
                 <div class="col-md-7">
                   <div class="detail-box"> 
                     <h1>
-                      Welcome To Our <br>
-                      Gift Shop
+                      Welcome To Our Website<br>
+                      {{$data['setting']->website_name}}
+                      <img src="{{ asset('assets/images/setting/' . $data['setting']->logo) }}" alt="Logo" style="max-height: 100px;"> 
                     </h1>
                     <p>
-                      Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis.
+                      {{$data['setting']->about_website}}
+                      
                     </p>
                     <a href="">
                       Contact Us

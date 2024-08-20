@@ -17,7 +17,7 @@
 
                     </h6>
                     <div>
-                        <form action="{{ route('backend.category.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('backend.category.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="title">Title</label>

@@ -32,12 +32,7 @@
                             <td><img src="{{ asset('assets/images/products/' . $data['record']->icon) }}" width="35%"
                                     alt=""></td>
                         </tr>
-                        <tr>
-                            <th>Status</th>
-                            <th>@include('backend.includes.display_status_message', [
-                                'status' => $data['record']->status,
-                            ])</th>
-                        </tr>
+                        
                         <tr>
                             <th>Created By</th>
                             <td>

@@ -50,9 +50,9 @@ class CategoryController extends Controller
 
         // Flash message based on creation status
         if ($record) {
-            $request->session()->flash('success', $this->module . 'Category Created Successfully');
+            $request->session()->flash('success', $this->module . 'Created Successfully');
         } else {
-            $request->session()->flash('error', $this->module . 'Category Creation Failed');
+            $request->session()->flash('error', $this->module . 'Creation Failed');
         }
 
         // Redirect to index route
@@ -137,17 +137,17 @@ class CategoryController extends Controller
     public function trash()
     {
         $data['records'] = Category::onlyTrashed()->get();
-        return view('backend.category.trash', compact('data'));
+        return view($this->base_folder .'trash', compact('data'));
     }
     public function restore($id)
     {
         $data['record'] = Category::where('id',$id)->onlyTrashed()->first();
         if ($data['record']->restore()) {
-            request()->session()->flash('success', 'Category Restored');
+            request()->session()->flash('success', $this->module .' Restored');
         }else{
-            request()->session()->flash('error','Category Restored Not Failed!!');
+            request()->session()->flash('error',$this->module .'Restored Not Failed!!');
         }
-        return redirect()->route('backend.category.trash');
+        return redirect()->route($this->base_route .'trash');
 
     }
     public function forceRemove(string $id)

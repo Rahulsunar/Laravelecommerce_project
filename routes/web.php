@@ -8,7 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
 
 // Home route
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/',[\App\Http\Controllers\Frontend\FrontController::class,'home'])->name('frontend.home');
 
 // Backend routes
 Route::prefix('backend')->name('backend.')->group(function () {
@@ -19,8 +19,11 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::resource('category', CategoryController::class);
 
     // Products Controller
+    Route::delete('/products/force_delete/{id}', [ProductsController::class, 'forceRemove'])->name('products.force_delete');
+    Route::get('/products/restore/{id}', [ProductsController::class, 'restore'])->name('products.restore');
     Route::get('/products/trash', [ProductsController::class, 'trash'])->name('products.trash');
     Route::resource('products', ProductsController::class);
+
 });
 
 // Dashboard route
